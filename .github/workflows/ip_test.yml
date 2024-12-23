@@ -15,7 +15,7 @@ jobs:
     
     - name: Ping remote IP address
       run: |
-        REMOTE_IP="142.251.46.174"  
+        REMOTE_IP="google.com"  
         echo "Pinging remote IP: $REMOTE_IP"
         ping -c 4 $REMOTE_IP  
         
