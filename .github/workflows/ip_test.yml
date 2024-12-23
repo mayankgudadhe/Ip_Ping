@@ -19,16 +19,16 @@ jobs:
         SELF_IP=$(curl -s ifconfig.me)  
         echo "Self IP address is: $SELF_IP"
     
-    - name: Ping remote IP address
+    - name: Test connectivity to google.com using curl
       run: |
-        REMOTE_IP="google.com"
-        echo "Pinging remote IP: $REMOTE_IP"
-        ping -4 -c 4 $REMOTE_IP || true  
-
-    - name: Check connectivity with curl
-      run: |
-        REMOTE_URL="https://google.com"
-        echo "Testing connectivity to: $REMOTE_URL"
-        curl -s -o /dev/null -w "%{http_code}" $REMOTE_URL
+        TARGET_URL="https://google.com"
+        echo "Testing connectivity to: $TARGET_URL"
+        HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" $TARGET_URL)
+        echo "HTTP Status Code: $HTTP_STATUS"
+        if [ "$HTTP_STATUS" -eq 200 ]; then
+          echo "Connection successful. The server is reachable!"
+        else
+          echo "Connection failed. The server is not reachable or returned status: $HTTP_STATUS"
+        fi
 
 
