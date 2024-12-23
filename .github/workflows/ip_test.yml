@@ -1,0 +1,27 @@
+name: Ping IP and Get Self IP
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  ping-self-and-remote:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Ping remote IP address
+      run: |
+        REMOTE_IP="142.251.46.174"  
+        echo "Pinging remote IP: $REMOTE_IP"
+        ping -c 4 $REMOTE_IP  
+        
+    - name: Get self IP address
+      run: |
+        echo "Getting self IP address"
+        SELF_IP=$(curl -s ifconfig.me)  
+        echo "Self IP address is: $SELF_IP"
+
