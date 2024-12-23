@@ -12,16 +12,23 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-    
-    - name: Ping remote IP address
-      run: |
-        REMOTE_IP="google.com"  
-        echo "Pinging remote IP: $REMOTE_IP"
-        ping -c 4 $REMOTE_IP  
-        
+
     - name: Get self IP address
       run: |
         echo "Getting self IP address"
         SELF_IP=$(curl -s ifconfig.me)  
         echo "Self IP address is: $SELF_IP"
+    
+    - name: Ping remote IP address
+      run: |
+        REMOTE_IP="google.com"
+        echo "Pinging remote IP: $REMOTE_IP"
+        ping -4 -c 4 $REMOTE_IP || true  
+
+    - name: Check connectivity with curl
+      run: |
+        REMOTE_URL="https://google.com"
+        echo "Testing connectivity to: $REMOTE_URL"
+        curl -s -o /dev/null -w "%{http_code}" $REMOTE_URL
+
 
